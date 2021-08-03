@@ -105,10 +105,8 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-# assign [class="Terminator"] $ws1
-# assign [class="firefox"] $ws2
-# assign [class="discord"] $ws3
-# assign [class="Spotify"] $ws4
+assign [class="discord"] $ws3
+
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -193,14 +191,14 @@ bindsym $mod+o mode "move_workspace"
 
 #for_window [class=".*"] border pixel 3 #*
 gaps top 30
-#aps inner 5
+gaps inner 15
 #gaps outer 5
 
 #smart_borders on
 #smart_borders no_gaps
 
 # Borders
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 3
 
 # polybar launch script
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
