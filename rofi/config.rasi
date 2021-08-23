@@ -1,0 +1,13 @@
+configuration {
+    font:                           "Cantarell 13";
+}
+
+* {
+    background-color:               transparent;
+    background:                     #16130F;
+    background-transparent:         #16130F;
+    text-color:                     #A39A90;
+    primary:                        #828257;
+    secondary:                      #2C2620;
+    urgent:                         #6D8257;
+}
