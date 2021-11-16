@@ -3,10 +3,11 @@
 set $terminal       alacritty
 set $statusbar      $HOME/.config/polybar/launch.sh
 set $compositor     picom --experimental-backends
-set $browser        librewolf
+set $browser        brave
 set $lockscreen     multilockscreen --lock blur
+set $polkit         /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
 set $applauncher    $HOME/.config/rofi/scripts/rofi-wrapper.sh drun
-set $gamelauncher   $HOME/.config/rofi/scripts/rofi-wrapper.sh games
+#set $gamelauncher   $HOME/.config/rofi/scripts/rofi-wrapper.sh games
 set $scriptlauncher $HOME/.config/rofi/scripts/rofi-wrapper.sh run
 set $windowsearch   $HOME/.config/rofi/scripts/rofi-wrapper.sh windows
 set $optionsmenu    $HOME/.config/rofi/scripts/rofi-wrapper.sh options
@@ -14,10 +15,12 @@ set $optionsmenu    $HOME/.config/rofi/scripts/rofi-wrapper.sh options
 
 #----------------------------- Startup applications --------------------------#
 exec        --no-startup-id dunst
-#exec        --no-startup-id nm-applet
-exec        --no-startup-id $compositor
+#exec       --no-startup-id nm-applet
+#exec_always --no-startup-id $compositor
+exec        --no-startup-id $polkit
 exec_always --no-startup-id $statusbar
-exec_always --no-startup-id multilockscreen --wall
+exec_always --no-startup-id multilockscreen -u ~/Pictures/Wallpapers/ActiveWallpapers/WallpaperI.jpg -u ~/Pictures/Wallpapers/ActiveWallpapers/WallpaperII.jpg
+#exec        --no-startup-id discord
 #-----------------------------------------------------------------------------#
 #=============================================================================#
 
@@ -50,18 +53,19 @@ client.unfocused        $backgr     $backgr     $foregr     $backgr
 client.urgent           $backgr     $urgent     $backgr     $urgent
 
 # Windows have a border of 4 pixels; replace pixel with normal to show titlebar
-new_window pixel 3
+new_window pixel 0
 
 # Font used by i3; controls size of title bar
-font pango:$font_family 12
+font pango:$font_family 0
 
 # Show gaps between open windows
-gaps top 30
-gaps inner 15
+#gaps top 30
+#gaps outer 20
+
 
 # Large horizontal spacing that only appears when a single window is open
 # for better behavior on ultrawide monitors
-#smart_gaps inverse_outer
+#smart_gaps on
 #-----------------------------------------------------------------------------#
 #=============================================================================#
 
@@ -78,17 +82,34 @@ set $second DVI-D-0
 bindsym $mod+Return    exec --no-startup-id $terminal
 
 # Open launcher
-bindsym $mod+d         exec --no-startup-id $applauncher
-bindsym $mod+shift+d   exec --no-startup-id $scriptlauncher
-bindsym $mod+g         exec --no-startup-id $gamelauncher
+bindsym $mod+d         exec --no-startup-id ~/.config/dotfiles/scripts/launcher.sh
+#bindsym $mod+shift+d   exec --no-startup-id $scriptlauncher
+#bindsym $mod+g         exec --no-startup-id $gamelauncher
 
 # Search open windows
-bindsym $mod+grave     exec --no-startup-id $windowsearch
+#bindsym $mod+grave     exec --no-startup-id $windowsearch
+
+# Start colour picker!
+bindsym --release $mod+c exec --no-startup-id ~/.config/dotfiles/scripts/colorpicker.py
 
 # Launch browser
 bindsym $mod+F2 exec --no-startup-id $browser
 
+# Lockscreen
+bindsym $mod+l  exec --no-startup-id $lockscreen
+
+workspace 1 output HDMI-0
+workspace 2 output HDMI-0
+workspace 3 output HDMI-0
+workspace 4 output HDMI-0
+
+workspace 5 output DVI-D-0
 workspace 6 output DVI-D-0
+workspace 7 output DVI-D-0
+workspace 8 output DVI-D-0
+
+assign [class="discord"] 5
+
 
 # Volume controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q sset Master 5%+
@@ -96,32 +117,35 @@ bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q sset Master 5%-
 bindsym XF86AudioMute        exec --no-startup-id amixer -q sset Master toggle
 
 # Screenshot of entire desktop
-bindsym $mod+F4       exec --no-startup-id scrot -e 'feh $f -x' -d 2
+bindsym Print                      exec --no-startup-id ~/.config/dotfiles/scripts/screenshot.py
 # Screenshot of focused window
-bindsym $mod+Shift+F4 exec --no-startup-id scrot -u -e 'feh $f -x'   
+bindsym $mod+Print                 exec --no-startup-id ~/.config/dotfiles/scripts/screenshot.py window
+# Screenshot of area
+bindsym --release $mod+Shift+Print           exec --no-startup-id ~/.config/dotfiles/scripts/screenshot.py area
+
 #-----------------------------------------------------------------------------#
 
 #---------------------------- Workspace navigation ---------------------------#
 # Controls to navigate inside a workspace
 
 # Change focus; both Vim style h,j,k,l and arrow keys work
-bindsym $mod+h      focus left
+#bindsym $mod+h      focus left
 bindsym $mod+Left   focus left
-bindsym $mod+j      focus down
+#bindsym $mod+j      focus down
 bindsym $mod+Down   focus down
-bindsym $mod+k      focus up
+#bindsym $mod+k      focus up
 bindsym $mod+Up     focus up
-bindsym $mod+l      focus right
+#bindsym $mod+l      focus right
 bindsym $mod+Right  focus right
 
 # Move focused container; both Vim style h,j,k,l and arrow keys work
-bindsym $mod+Shift+h      move left
+#bindsym $mod+Shift+h      move left
 bindsym $mod+Shift+Left   move left
-bindsym $mod+Shift+j      move down
+#bindsym $mod+Shift+j      move down
 bindsym $mod+Shift+Down   move down
-bindsym $mod+Shift+k      move up
+#bindsym $mod+Shift+k      move up
 bindsym $mod+Shift+Up     move up
-bindsym $mod+Shift+l      move right
+#bindsym $mod+Shift+l      move right
 bindsym $mod+Shift+Right  move right
 #-----------------------------------------------------------------------------#
 
@@ -248,5 +272,3 @@ mode "move_workspace" {
 }
 
 bindsym $mod+o mode "move_workspace"
-
-#exec_always --no-startup-id /usr/bin/dunst

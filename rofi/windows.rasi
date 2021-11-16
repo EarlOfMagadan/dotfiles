@@ -11,13 +11,12 @@ configuration {
 	font:							"Noto Sans Bold 10";
     show-icons:                     true;
 	icon-theme: 					"Papirus";
-    display-drun: 					"";
-    drun-display-format:            "{name}";
-    drun-match-fields:              "name,generic";
     disable-history:                false;
     fullscreen:                     false;
 	hide-scrollbar: 				true;
 	sidebar-mode: 					false;
+    window-format:                  "{w} {t}";
+    display-window:                 "";
 }
 
 * {
@@ -95,9 +94,9 @@ mainbox {
 element {
     background-color:               @background-alt;
     text-color:                     @foreground;
-    orientation:                    vertical;
+    orientation:                    horizontal;
     border-radius:                  0%;
-    padding:                        2% 0% 2% 0%;
+    padding:                        2%;
 }
 
 element-icon {
@@ -107,7 +106,7 @@ element-icon {
 
 element-text {
     expand:                         true;
-    horizontal-align:               0.5;
+    horizontal-align:               0;
     vertical-align:                 0.5;
     margin:                         0.5% 0.5% -0.5% 0.5%;
 }
