@@ -16,7 +16,7 @@ set $optionsmenu    $HOME/.config/rofi/scripts/rofi-wrapper.sh options
 #----------------------------- Startup applications --------------------------#
 exec        --no-startup-id dunst
 #exec       --no-startup-id nm-applet
-#exec_always --no-startup-id $compositor
+exec_always --no-startup-id $compositor
 exec        --no-startup-id $polkit
 exec_always --no-startup-id $statusbar
 exec_always --no-startup-id multilockscreen -u ~/Pictures/Wallpapers/ActiveWallpapers/WallpaperI.jpg -u ~/Pictures/Wallpapers/ActiveWallpapers/WallpaperII.jpg
@@ -30,10 +30,10 @@ exec_always --no-startup-id multilockscreen -u ~/Pictures/Wallpapers/ActiveWallp
 #------------------------------- Colors & font -------------------------------#
 
 # Colors are set from .Xresources. Fallback is dark Nord color scheme
-set_from_resource $backgr background        #16130F
-set_from_resource $bg_alt background_alt    #2C2620
+set_from_resource $backgr background        #c0c0c0
+set_from_resource $bg_alt background_alt    #c0c0c0
 set_from_resource $foregr foreground        #A39A90
-set_from_resource $primar primary           #57826D
+set_from_resource $primar primary           #5ccec8
 set_from_resource $urgent urgent            #826D57
 #-----------------------------------------------------------------------------#
 
@@ -47,21 +47,21 @@ client.background $backgr   # default background color
 # indicator     - Color of border edge where new window will be created
 
 # class                 bar border  win border  text        indicator
-client.focused          $primar     $primar     $backgr     $primar
-client.focused_inactive $bg_alt     $bg_alt     $foregr     $bg_alt
-client.unfocused        $backgr     $backgr     $foregr     $backgr
-client.urgent           $backgr     $urgent     $backgr     $urgent
+client.focused          $primar     $primar     $primar     $primar
+client.focused_inactive #c0c0c0     #c0c0c0     #c0c0c0     #c0c0c0
+client.unfocused        #c0c0c0     #c0c0c0     #c0c0c0     #c0c0c0
+client.urgent           $urgent     $urgent     $backgr     $urgent
 
-# Windows have a border of 4 pixels; replace pixel with normal to show titlebar
-new_window pixel 0
+default_border pixel 2
+default_floating_border none
 
 # Font used by i3; controls size of title bar
-font pango:$font_family 0
+font pango:$font_family 4
 
 # Show gaps between open windows
 #gaps top 30
-#gaps outer 20
-
+#gaps outer 37
+gaps inner 10
 
 # Large horizontal spacing that only appears when a single window is open
 # for better behavior on ultrawide monitors

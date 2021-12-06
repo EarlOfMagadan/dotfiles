@@ -11,6 +11,6 @@ rgba = color_info[3].replace("srgb", "rgb")
 if(hex == "decode"):
     exit(0)
 
-cmd = "echo -e \"{0}\n{1}\" | rofi -theme ~/.config/rofi/colorpicker.rasi -dmenu | xclip -selection clipboard".format(hex, rgba)
+cmd = "echo -e \"{0}\n{1}\" | rofi -config ~/.config/rofi/colorpicker.rasi -dmenu | xclip -selection clipboard".format(hex, rgba)
 
 system(cmd)
