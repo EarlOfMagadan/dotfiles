@@ -1,26 +1,31 @@
 #=============================== Applications ================================#
 #--------------------------- Default applications ----------------------------#
-set $terminal       alacritty
-set $statusbar      $HOME/.config/polybar/launch.sh
-set $compositor     picom --experimental-backends
-set $browser        brave
-set $lockscreen     multilockscreen --lock blur
-set $polkit         /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
-set $applauncher    $HOME/.config/rofi/scripts/rofi-wrapper.sh drun
-#set $gamelauncher   $HOME/.config/rofi/scripts/rofi-wrapper.sh games
-set $scriptlauncher $HOME/.config/rofi/scripts/rofi-wrapper.sh run
-set $windowsearch   $HOME/.config/rofi/scripts/rofi-wrapper.sh windows
-set $optionsmenu    $HOME/.config/rofi/scripts/rofi-wrapper.sh options
+set $terminal		alacritty
+set $starter		$HOME/.config/dotfiles/scripts/launch.sh
+set $compositor		picom --experimental-backends
+set $browser		brave 
+set $audio		$HOME/.config/dotfiles/scripts/piped.sh
+#set $lockscreen	multilockscreen --lock blur
+#set $polkit		/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1A
+set $applauncher	$HOME/.config/scripts/launcher.sh drun
+set $bitwarden		bwmenu
+set $vpnd		nordvpnd
+#set $scriptlauncher $HOME/.config/rofi/scripts/rofi-wrapper.sh run
+#set $windowsearch   $HOME/.config/rofi/scripts/rofi-wrapper.sh windows
+#set $optionsmenu    $HOME/.config/rofi/scripts/rofi-wrapper.sh options
 #-----------------------------------------------------------------------------#
 
 #----------------------------- Startup applications --------------------------#
-exec        --no-startup-id dunst
-#exec       --no-startup-id nm-applet
-exec_always --no-startup-id $compositor
-exec        --no-startup-id $polkit
-exec_always --no-startup-id $statusbar
-exec_always --no-startup-id multilockscreen -u ~/Pictures/Wallpapers/ActiveWallpapers/WallpaperI.jpg -u ~/Pictures/Wallpapers/ActiveWallpapers/WallpaperII.jpg
-#exec        --no-startup-id discord
+exec_always	--no-startup-id $starter
+exec		--no-startup-id dunst
+#exec		--no-startup-id nm-applet
+exec		--no-startUp-id $vpnd
+exec_always 	--no-startup-id $compositor
+#exec		--no-startup-id $polkit
+exec           	--no-startup-id $audio
+#exec_always	--no-startup-id nordvpnd
+#exec_always	--no-startup-id multilockscreen -u ~/Pictures/Wallpapers/ActiveWallpapers/WallpaperI.jpg -u ~/Pictures/Wallpapers/ActiveWallpapers/WallpaperI.jpg
+exec_always --no-startup-id autotiling
 #-----------------------------------------------------------------------------#
 #=============================================================================#
 
@@ -55,13 +60,16 @@ client.urgent           $urgent     $urgent     $backgr     $urgent
 default_border pixel 2
 default_floating_border none
 
+#for_window [class="rofi"] border pixel 2
+
+
 # Font used by i3; controls size of title bar
 font pango:$font_family 4
 
 # Show gaps between open windows
-#gaps top 30
-#gaps outer 37
-gaps inner 10
+gaps inner 35
+gaps outer 20
+#for_window [class=^.*] border pixel 0
 
 # Large horizontal spacing that only appears when a single window is open
 # for better behavior on ultrawide monitors
@@ -84,7 +92,7 @@ bindsym $mod+Return    exec --no-startup-id $terminal
 # Open launcher
 bindsym $mod+d         exec --no-startup-id ~/.config/dotfiles/scripts/launcher.sh
 #bindsym $mod+shift+d   exec --no-startup-id $scriptlauncher
-#bindsym $mod+g         exec --no-startup-id $gamelauncher
+bindsym $mod+g         exec --no-startup-id $bitwarden
 
 # Search open windows
 #bindsym $mod+grave     exec --no-startup-id $windowsearch
@@ -96,19 +104,41 @@ bindsym --release $mod+c exec --no-startup-id ~/.config/dotfiles/scripts/colorpi
 bindsym $mod+F2 exec --no-startup-id $browser
 
 # Lockscreen
-bindsym $mod+l  exec --no-startup-id $lockscreen
+bindsym $mod+F9  exec --no-startup-id $lockscreen
+bindsym $mod+F10 exec --no-startup-id loginctl reboot
+bindsym $mod+F11 exec --no-startup-id loginctl poweroff
 
 workspace 1 output HDMI-0
+set $ws1 "HOME"
+
 workspace 2 output HDMI-0
+set $ws2 "NETWORK"
+
 workspace 3 output HDMI-0
+set $ws4 "TERMINAL"
+
 workspace 4 output HDMI-0
+set $ws4 "FILESYSTEM"
 
-workspace 5 output DVI-D-0
-workspace 6 output DVI-D-0
-workspace 7 output DVI-D-0
-workspace 8 output DVI-D-0
+workspace 5 output HDMI-0
+set $ws5 "DOCUMENTS"
 
-assign [class="discord"] 5
+workspace 6 output HDMI-0
+set $ws6 "GAMING"
+
+workspace 7 output HDMI-0
+set $ws7 "SYSTEM"
+
+workspace 8 output DP-2
+set $ws8 "COMMUNICATION"
+
+workspace 9 output DP-2
+set $ws9 "MEDIA"
+
+workspace 10 output DP-2
+set $ws10 "TERMINAL II"
+
+assign [class="discord"] 8
 
 
 # Volume controls
@@ -218,6 +248,8 @@ bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
 
 # Relative workspace motion
 bindsym $mod+Ctrl+l workspace next
@@ -232,7 +264,8 @@ bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
-
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
 
 
 # reload the configuration file
@@ -272,3 +305,5 @@ mode "move_workspace" {
 }
 
 bindsym $mod+o mode "move_workspace"
+
+

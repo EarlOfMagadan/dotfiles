@@ -1,6 +1,85 @@
-/** Basic config file **/
+configuration 
+{
+    disable-history: true;
+}
 
-configuration {
-  show-icons:         true;
-  icon-theme:         "Papirus";
+@theme "/dev/null"
+
+window
+{
+    location: center;
+    font: "Share Tech Mono 12";
+    width: 35%;
+    border: 2px;
+    border-color: #5ccec8;
+}
+
+mainbox
+{
+    background-color: #061116;
+    spacing: 8px;
+}
+
+inputbar
+{
+    spacing: 0;
+    background-color: #061116;
+}
+
+prompt
+{
+    padding: 2px 8px;
+    color: #000000;
+    background-color: #5ccec8;
+}
+
+entry
+{
+    padding: 2px 8px;
+    color: #dfdfdf;
+    background-color: #1A323D;
+}
+
+case-indicator
+{
+    enabled: false;
+}
+
+listview
+{
+    background-color: #061116;
+    spacing: 5px;
+    lines: 10;
+    cycle: false;
+}
+
+element
+{
+    padding: 5px;
+    background-color: #1A323D;
+}
+
+element.selected
+{
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+element-text
+{
+    color: #5ccec8;
+    background-color: #1A323D;
+    highlight: None;
+}
+
+element-text.selected
+{
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+error-message, textbox
+{
+    color: #c2c2c2;
+    background-color: #1A323D;
 }

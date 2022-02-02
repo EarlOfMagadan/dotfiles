@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rofi -config ~/.config/dotfiles/rofi/launcher.rasi -show drun
+rofi -config ~/.config/dotfiles/rofi/config.rasi -show drun
