@@ -1,0 +1,5 @@
+add_newline = false
+# Change Shell Character
+
+[character]   
+success_symbol = "[➜](bold green)"

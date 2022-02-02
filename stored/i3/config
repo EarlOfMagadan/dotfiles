@@ -1,0 +1,274 @@
+#=============================== Applications ================================#
+#--------------------------- Default applications ----------------------------#
+set $terminal       alacritty
+set $statusbar      $HOME/.config/polybar/launch.sh
+set $compositor     picom --experimental-backends
+set $browser        brave
+set $lockscreen     multilockscreen --lock blur
+set $polkit         /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+set $applauncher    $HOME/.config/rofi/scripts/rofi-wrapper.sh drun
+#set $gamelauncher   $HOME/.config/rofi/scripts/rofi-wrapper.sh games
+set $scriptlauncher $HOME/.config/rofi/scripts/rofi-wrapper.sh run
+set $windowsearch   $HOME/.config/rofi/scripts/rofi-wrapper.sh windows
+set $optionsmenu    $HOME/.config/rofi/scripts/rofi-wrapper.sh options
+#-----------------------------------------------------------------------------#
+
+#----------------------------- Startup applications --------------------------#
+exec        --no-startup-id dunst
+#exec       --no-startup-id nm-applet
+exec_always --no-startup-id $compositor
+exec        --no-startup-id $polkit
+exec_always --no-startup-id $statusbar
+exec_always --no-startup-id multilockscreen -u ~/Pictures/Wallpapers/ActiveWallpapers/WallpaperI.jpg -u ~/Pictures/Wallpapers/ActiveWallpapers/WallpaperII.jpg
+#exec        --no-startup-id discord
+#-----------------------------------------------------------------------------#
+#=============================================================================#
+
+
+
+#================================= Appearance ================================#
+#------------------------------- Colors & font -------------------------------#
+
+# Colors are set from .Xresources. Fallback is dark Nord color scheme
+set_from_resource $backgr background        #c0c0c0
+set_from_resource $bg_alt background_alt    #c0c0c0
+set_from_resource $foregr foreground        #A39A90
+set_from_resource $primar primary           #5ccec8
+set_from_resource $urgent urgent            #826D57
+#-----------------------------------------------------------------------------#
+
+#----------------------------- Window appearance -----------------------------#
+# Window colors
+client.background $backgr   # default background color
+
+# bar border    - Border color around title bar (used in tabbed windows)
+# window border - Border color around window
+# text          - Text color for the title bar
+# indicator     - Color of border edge where new window will be created
+
+# class                 bar border  win border  text        indicator
+client.focused          $primar     $primar     $primar     $primar
+client.focused_inactive #c0c0c0     #c0c0c0     #c0c0c0     #c0c0c0
+client.unfocused        #c0c0c0     #c0c0c0     #c0c0c0     #c0c0c0
+client.urgent           $urgent     $urgent     $backgr     $urgent
+
+default_border pixel 2
+default_floating_border none
+
+# Font used by i3; controls size of title bar
+font pango:$font_family 4
+
+# Show gaps between open windows
+#gaps top 30
+#gaps outer 37
+gaps inner 10
+
+# Large horizontal spacing that only appears when a single window is open
+# for better behavior on ultrawide monitors
+#smart_gaps on
+#-----------------------------------------------------------------------------#
+#=============================================================================#
+
+
+#================================= Controls ==================================#
+# - Setting the modifier key.
+set $mod Mod4
+
+# - Setting up monitor relationships.
+set $main HDMI-0 
+set $second DVI-D-0
+#------------------------------- Applications --------------------------------#
+# Launch a terminal
+bindsym $mod+Return    exec --no-startup-id $terminal
+
+# Open launcher
+bindsym $mod+d         exec --no-startup-id ~/.config/dotfiles/scripts/launcher.sh
+#bindsym $mod+shift+d   exec --no-startup-id $scriptlauncher
+#bindsym $mod+g         exec --no-startup-id $gamelauncher
+
+# Search open windows
+#bindsym $mod+grave     exec --no-startup-id $windowsearch
+
+# Start colour picker!
+bindsym --release $mod+c exec --no-startup-id ~/.config/dotfiles/scripts/colorpicker.py
+
+# Launch browser
+bindsym $mod+F2 exec --no-startup-id $browser
+
+# Lockscreen
+bindsym $mod+l  exec --no-startup-id $lockscreen
+
+workspace 1 output HDMI-0
+workspace 2 output HDMI-0
+workspace 3 output HDMI-0
+workspace 4 output HDMI-0
+
+workspace 5 output DVI-D-0
+workspace 6 output DVI-D-0
+workspace 7 output DVI-D-0
+workspace 8 output DVI-D-0
+
+assign [class="discord"] 5
+
+
+# Volume controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q sset Master 5%+
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q sset Master 5%-
+bindsym XF86AudioMute        exec --no-startup-id amixer -q sset Master toggle
+
+# Screenshot of entire desktop
+bindsym Print                      exec --no-startup-id ~/.config/dotfiles/scripts/screenshot.py
+# Screenshot of focused window
+bindsym $mod+Print                 exec --no-startup-id ~/.config/dotfiles/scripts/screenshot.py window
+# Screenshot of area
+bindsym --release $mod+Shift+Print           exec --no-startup-id ~/.config/dotfiles/scripts/screenshot.py area
+
+#-----------------------------------------------------------------------------#
+
+#---------------------------- Workspace navigation ---------------------------#
+# Controls to navigate inside a workspace
+
+# Change focus; both Vim style h,j,k,l and arrow keys work
+#bindsym $mod+h      focus left
+bindsym $mod+Left   focus left
+#bindsym $mod+j      focus down
+bindsym $mod+Down   focus down
+#bindsym $mod+k      focus up
+bindsym $mod+Up     focus up
+#bindsym $mod+l      focus right
+bindsym $mod+Right  focus right
+
+# Move focused container; both Vim style h,j,k,l and arrow keys work
+#bindsym $mod+Shift+h      move left
+bindsym $mod+Shift+Left   move left
+#bindsym $mod+Shift+j      move down
+bindsym $mod+Shift+Down   move down
+#bindsym $mod+Shift+k      move up
+bindsym $mod+Shift+Up     move up
+#bindsym $mod+Shift+l      move right
+bindsym $mod+Shift+Right  move right
+#-----------------------------------------------------------------------------#
+
+#--------------------------- Container manipulation --------------------------#
+# Controls to manipulate layout, location, and appearance for window containers
+
+# Split focused container horizontally or vertically
+bindsym $mod+b split h  
+bindsym $mod+v split v 
+
+# Toggle fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# Change container layout
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Focus the parent container which allows manipulating an entire container
+# and all the children at once
+bindsym $mod+a focus parent
+# Return focus to the child container
+bindsym $mod+z focus child
+
+# Toggle tiling/floating for a container
+bindsym $mod+Shift+space floating toggle
+# Change focus between tiling/floating containers
+bindsym $mod+space focus mode_toggle
+# Hold the mod key to drag and resize floating container
+floating_modifier $mod
+
+# Move the currently focused container to the scratchpad which contains
+# floating containers available on all workspaces
+bindsym $mod+shift+minus move scratchpad
+# Show/hide the scratchpad
+bindsym $mod+minus scratchpad show
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# Special mode to resize window (mouse drag also works)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        # Grow/shrink the window size using typical vim navigation or arrows
+        bindsym h     resize shrink width  10 px or 10 ppt
+        bindsym Left  resize shrink width  10 px or 10 ppt
+        bindsym j     resize grow   height 10 px or 10 ppt
+        bindsym Down  resize grow   height 10 px or 10 ppt
+        bindsym k     resize shrink height 10 px or 10 ppt
+        bindsym Up    resize shrink height 10 px or 10 ppt
+        bindsym l     resize grow   width  10 px or 10 ppt
+        bindsym Right resize grow   width  10 px or 10 ppt
+
+        # Return to normal mode
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+#-----------------------------------------------------------------------------#
+
+#-------------------------------- Workspaces ---------------------------------#
+# Controls to navigate between workspaces
+
+# Switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+
+# Relative workspace motion
+bindsym $mod+Ctrl+l workspace next
+bindsym $mod+Ctrl+h workspace prev
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+
+
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+#bar {
+#	position top
+ #       status_command i3status
+#}
+
+# Sreen brightness controls
+
+# Touchpad controls
+bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# keybind to move workspaces between monitors
+# i3 move a workspace to another monitor (multi monitor setup)
+mode "move_workspace" {
+ bindsym Up move workspace to output up
+ bindsym Down move workspace to output down
+ bindsym Left move workspace to output left
+ bindsym Up move workspace to output up
+
+ bindsym Escape mode "default"
+}
+
+bindsym $mod+o mode "move_workspace"
