@@ -6,7 +6,7 @@ A large amount of code and ideas in this repository are borrowed from other peop
 
 - Terminal: Alacritty, I may switch to kitty
 
-- Fonts: [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono) [Fixedsys](https://www.cufonfonts.com/font/fixedsys-excelsior-301)
+- Fonts: [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono) and [Fixedsys](https://www.cufonfonts.com/font/fixedsys-excelsior-301)
 
 
 - WM: i3wm
